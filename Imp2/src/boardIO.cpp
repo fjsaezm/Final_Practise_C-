@@ -26,13 +26,13 @@ void GameIO::printPlayerName(const Player& player,std::ostream& os)
 
 void GameIO::setPlayers(Player& player1, Player& player2)
 {
-  char name1[50] = {0}, name2[50] = {0};
+  char name1[100] = {0}, name2[100] = {0};
 
-  cin.getline(name1,50,'\n');
+  cin.getline(name1,100,'\n');
 
   player1.setName(name1,strlen(name1));
 
-  cin.getline(name2,50,'\n');
+  cin.getline(name2,100,'\n');
 
   player2.setName(name2,strlen(name2));
 }

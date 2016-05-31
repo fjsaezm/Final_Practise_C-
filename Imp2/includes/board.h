@@ -36,15 +36,17 @@ public:
 
   bool insertInColumn(int col);
 
-  void setTable(Matrix m);
+  void setTable(const Matrix& matrix);
 
   bool inARow() const;
 
   bool searchInDirection(int i, int j, int dirI, int dirJ) const;
 
   int calculateScore() const;
-  //Need function to calculate score
-};
 
+  friend std::ostream& operator<<(std::ostream& os, const Board& board);
+
+  friend std::istream& operator>>( std::istream& is, Board& board);
+};
 
 #endif

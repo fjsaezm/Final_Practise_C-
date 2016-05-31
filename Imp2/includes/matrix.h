@@ -1,5 +1,6 @@
 #ifndef _MATRIX_H
 #define _MATRIX_H
+#include <iostream>
 
 class Matrix
 {
@@ -30,11 +31,16 @@ class Matrix
 
   int emptyPositions() const;
 
-  Matrix operator =(Matrix matrix);
+  Matrix& operator =(const Matrix& matrix);
 
   ~Matrix();
 
+  friend std::ostream& operator<<(std::ostream& os,const Matrix& matrix);
+
+  friend std::istream& operator>>( std::istream& is, Matrix& matrix);
 
 };
+
+
 
 #endif

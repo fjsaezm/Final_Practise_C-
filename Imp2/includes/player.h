@@ -30,7 +30,9 @@ class Player
 
   void addWonGame();
 
+  friend std::ostream& operator<<(std::ostream& os, const Player& player);
 
+  friend std::istream& operator >>( std::istream& is, Player& player);
 
 };
 

@@ -63,18 +63,9 @@ bool Board::insertInColumn(int j)
 }
 
 
-void Board::setTable(Matrix m)
+void Board::setTable(const Matrix& matrix)
 {
-  this->m.setCols(m.cols());
-  this->m.setRows(m.rows());
-
-  for(int i = 0; i < m.rows(); i++)
-  {
-    for(int j = 0; j < m.cols(); j++)
-    {
-      this->m.setElement(i,j,m.getElement(i,j));
-    }
-  }
+  this->m = matrix;
 }
 
 bool Board::inARow() const
@@ -143,4 +134,27 @@ bool Board::inARow() const
   int Board::calculateScore() const
   {
     return emptyPositions() + rows()*cols() + toAlign*5;
+  }
+
+
+
+  std::ostream& operator<<(std::ostream& os, const Board& board)
+  {
+
+    if(os)
+      os << board.toAlign << " " << board.turn << std::endl << board.m;
+
+    return os;
+  }
+
+
+  std::istream& operator>>(std::istream& is, Board& board)
+  {
+    if(is)
+    {
+      is >> board.toAlign >> board.turn;
+      is >> board.m;
+    }
+
+    return is;
   }
