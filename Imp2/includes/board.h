@@ -9,12 +9,13 @@ class Board
   Matrix m;
   int toAlign;
   int turn;
+  int toInsert;
 
 public:
 
-  Board():toAlign(0),turn(1){};
+  Board():toAlign(0),turn(1),toInsert(0){};
 
-  Board(int positions):toAlign(positions),turn(1){};
+  Board(int positions,int number):toAlign(positions),turn(1),toInsert(number){};
 
   int rows() const;
 
@@ -31,6 +32,12 @@ public:
   void resetBoard();
 
   int getTurn() const;
+
+  int getToInsert() const;
+
+  void setToInsert(int number);
+
+  int leftToInsert() const;
 
   void setTurn();
 

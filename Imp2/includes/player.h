@@ -30,6 +30,8 @@ class Player
 
   void addWonGame();
 
+  bool isAI() const;
+
   friend std::ostream& operator<<(std::ostream& os, const Player& player);
 
   friend std::istream& operator >>( std::istream& is, Player& player);

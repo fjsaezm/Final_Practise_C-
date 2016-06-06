@@ -137,7 +137,7 @@ bool Board::inARow() const
       areAligned++;
     }
 
-    return areAligned == toAlign && aligned;
+    return areAligned == toAlign && aligned && valid;
   }
 
 

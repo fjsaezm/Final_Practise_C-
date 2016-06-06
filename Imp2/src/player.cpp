@@ -50,6 +50,11 @@ void Player::addWonGame()
   wonGames++;
 }
 
+bool Player::isAI() const
+{
+  return name[0] == '@';
+}
+
 std::ostream& operator<<(std::ostream& os, const Player& player)
 {
   if(os)

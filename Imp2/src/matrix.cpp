@@ -1,4 +1,5 @@
 #include "matrix.h"
+#include <cassert>
 
 Matrix::Matrix(int rows,int cols)
 {
@@ -37,6 +38,8 @@ int Matrix::cols() const
 
 int Matrix::getElement(int i, int j) const
 {
+  if(i == -1 || j == -1 || i == r || j == c) return 0;
+  assert( i > -1 && j > -1 && i < r && j < c);
   return m[i*c + j];
 }
 
@@ -64,7 +67,6 @@ int Matrix::emptyPositions() const
 
 Matrix& Matrix::operator =(const Matrix& matrix)
 {
-  //Easier calling the copy constructor
   if(this!= &matrix)
   {
     delete []m;

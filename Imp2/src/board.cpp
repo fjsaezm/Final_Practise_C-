@@ -45,6 +45,20 @@ int Board::getTurn() const
   return turn;
 }
 
+int Board::getToInsert() const
+{
+  return toInsert;
+}
+
+void Board::setToInsert(int number)
+{
+  this->toInsert = number;
+}
+
+int Board::leftToInsert() const
+{
+  return emptyPositions()%toInsert;
+}
 void Board::setTurn()
 {
   turn = turn == 1 ? 2 : 1;
@@ -53,6 +67,8 @@ void Board::setTurn()
 bool Board::insertInColumn(int j)
 {
   int i = 0;
+  //Separate if, because i have an assert on get position and this avoids that assert
+  if(j < 0 || j >= cols()) return false;
   if(getPosition(i,j) != 0) return false;
   while(getPosition(i,j) == 0 && i != cols()) i++;
 
@@ -77,32 +93,16 @@ bool Board::inARow() const
     {
       if(getPosition(i,j)!= 0)
       {
-        if(i == 0)
+        for(int k = -1; k <= 1 && !inARow; k++)
         {
-          if(j == 0) inARow = searchInDirection(i,j,0,1) || searchInDirection(i,j,1,0) || searchInDirection(i,j,1,1);
-          else if( j == cols() - 1)  inARow = searchInDirection(i,j,1,0) || searchInDirection(i,j,0,-1) || searchInDirection(i,j,1,-1);
-          else inARow = searchInDirection(i,j,0,1) || searchInDirection(i,j,1,0) || searchInDirection(i,j,1,1) || searchInDirection(i,j,1,-1) || searchInDirection(i,j,0,-1);
-
+          for(int t = -1; t <= 1 && !inARow; t++)
+          {
+            if(!(k == 0 && t == 0))
+            {
+              inARow = searchInDirection(i,j,k,t);
+            }
+          }
         }
-
-        else if(j == 0)
-        {
-          if( i == rows()- 1) inARow = searchInDirection(i,j,0,1) || searchInDirection(i,j,-1,0) || searchInDirection(i,j,-1,1);
-          else inARow = searchInDirection(i,j,0,1) || searchInDirection(i,j,1,0) || searchInDirection(i,j,-1,0) || searchInDirection(i,j,-1,1) || searchInDirection(i,j,1,1);
-        }
-
-        else if(j == cols() - 1)
-        {
-          if( i == rows()- 1) inARow = searchInDirection(i,j,0,-1) || searchInDirection(i,j,-1,0) || searchInDirection(i,j,-1,-1);
-          else inARow = searchInDirection(i,j,0,-1) || searchInDirection(i,j,-1,0) || searchInDirection(i,j,1,0) || searchInDirection(i,j,-1,-1) || searchInDirection(i,j,1,-1);
-        }
-        else if( i == rows() -1)
-        {
-          inARow = searchInDirection(i,j,0,1) || searchInDirection(i,j,0,-1) || searchInDirection(i,j,-1,-1) || searchInDirection(i,j,-1,1) || searchInDirection(i,j,-1,0);
-        }
-
-        else inARow = searchInDirection(i,j,-1,-1) || searchInDirection(i,j,0,-1) || searchInDirection(i,j,-1,1) || searchInDirection(i,j,1,0) || searchInDirection(i,j,0,1) || searchInDirection(i,j,1,-1) || searchInDirection(i,j,-1,0) || searchInDirection(i,j,1,1);
-
       }
     }
   }
@@ -124,7 +124,7 @@ bool Board::inARow() const
       valid = (j+dirj) >= 0 && (dirj + j) < cols() && (diri + i) >= 0 && (i + diri) < rows();
       diri += dirI;
       dirj += dirJ;
-      areAligned++;
+      if(aligned && valid)areAligned++;
     }
 
     return areAligned == toAlign && aligned;

@@ -2,7 +2,7 @@
 #include "player.h"
 #include "board.h"
 #include "matrix.h"
-#include "boardIO.h"
+#include "gameIO.h"
 
 using namespace std;
 

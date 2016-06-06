@@ -1,4 +1,4 @@
-#My makefile 1 for the first imp.
+#My makefile 1 for the second imp.
 
 CXX=g++
 CXXFLAGS= -Wall -Wextra -pedantic -std=c++03 -g -Iincludes
@@ -18,16 +18,16 @@ obj/board.o : includes/board.h src/board.cpp includes/matrix.h
 obj/player.o : includes/player.h src/player.cpp
 	$(CXX) -c $(CXXFLAGS) -o obj/player.o src/player.cpp
 
-obj/boardIO.o:  includes/boardIO.h src/boardIO.cpp includes/player.h includes/board.h
-	$(CXX) -c $(CXXFLAGS) -o obj/boardIO.o src/boardIO.cpp
+obj/gameIO.o:  includes/gameIO.h src/gameIO.cpp includes/player.h includes/board.h
+	$(CXX) -c $(CXXFLAGS) -o obj/gameIO.o src/gameIO.cpp
 
-obj/main.o :  src/main.cpp includes/board.h includes/matrix.h includes/boardIO.h includes/player.h
+obj/main.o :  src/main.cpp includes/board.h includes/matrix.h includes/gameIO.h includes/player.h
 	$(CXX) -c $(CXXFLAGS) -o obj/main.o src/main.cpp
 
 
 #******************Exec file generation*************
-bin/connectN: obj/main.o obj/board.o obj/boardIO.o obj/player.o obj/matrix.o
-	$(CXX) -o bin/connectN obj/main.o obj/board.o obj/boardIO.o obj/player.o obj/matrix.o
+bin/connectN: obj/main.o obj/board.o obj/gameIO.o obj/player.o obj/matrix.o
+	$(CXX) -o bin/connectN obj/main.o obj/board.o obj/gameIO.o obj/player.o obj/matrix.o
 
 
 #************************Cleaning******************

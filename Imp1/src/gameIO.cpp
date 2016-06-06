@@ -1,5 +1,5 @@
 
-#include "boardIO.h"
+#include "gameIO.h"
 #include <iostream>
 #include "player.h"
 #include "board.h"
@@ -82,7 +82,7 @@ void GameIO::results(const Board& board, Player& player1, Player& player2)
 {
   cout << "Game has ended!!!" << endl;
 
-  if(board.emptyPositions() == 0)
+  if(board.emptyPositions() == 0 && !board.inARow())
   {
     cout << "Nobody won this time! Draw!" << endl;
   }
