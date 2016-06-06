@@ -18,11 +18,18 @@ int main(int argc, char* argv[])
     Player player1(1),player2(2);
     if(Game.loadGame(argv[1],board,player1,player2))
     {
+      int alreadyPlaced = board.leftToInsert();
       do{
           Game.printBoard(board);
           while(!board.inARow() && board.emptyPositions() != 0)
           {
-            Game.insertToken(board,player1,player2);
+            for(; alreadyPlaced < board.getToInsert(); alreadyPlaced++)
+            {
+              Game.insertToken(board,player1,player2);
+            }
+            alreadyPlaced = 0;
+            if(!board.inARow() && board.emptyPositions()!= 0)board.setTurn();
+
           }
           Game.results(board, player1,player2);
           board.resetBoard();

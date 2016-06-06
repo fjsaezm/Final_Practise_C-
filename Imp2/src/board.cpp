@@ -57,8 +57,9 @@ void Board::setToInsert(int number)
 
 int Board::leftToInsert() const
 {
-  return emptyPositions()%toInsert;
+  return (rows()*cols() - this->emptyPositions())%toInsert;
 }
+
 void Board::setTurn()
 {
   turn = turn == 1 ? 2 : 1;
@@ -68,12 +69,19 @@ bool Board::insertInColumn(int j)
 {
   int i = 0;
   //Separate if, because i have an assert on get position and this avoids that assert
-  if(j < 0 || j >= cols()) return false;
-  if(getPosition(i,j) != 0) return false;
+  if(j < 0 || j >= cols())
+    return false;
+
+  if(getPosition(i,j) != 0)
+    return false;
+
   while(getPosition(i,j) == 0 && i != cols()) i++;
 
-  if(turn == 1) m.setElement(i-1,j,1);
-  else m.setElement(i-1,j,2);
+  if(turn == 1)
+    m.setElement(i-1,j,1);
+
+  else
+    m.setElement(i-1,j,2);
 
   return true;
 }
@@ -121,9 +129,12 @@ bool Board::inARow() const
     while(valid && aligned && areAligned < toAlign)
     {
       aligned = (getPosition(i,j) == getPosition(i + diri,j + dirj));
+
       valid = (j+dirj) >= 0 && (dirj + j) < cols() && (diri + i) >= 0 && (i + diri) < rows();
+
       diri += dirI;
       dirj += dirJ;
+
       if(aligned && valid)areAligned++;
     }
 
@@ -142,7 +153,7 @@ bool Board::inARow() const
   {
 
     if(os)
-      os << board.toAlign << " " << board.turn << std::endl << board.m;
+      os << board.toAlign << " " << board.turn << " " <<board.toInsert <<std::endl << board.m;
 
     return os;
   }
@@ -152,7 +163,7 @@ bool Board::inARow() const
   {
     if(is)
     {
-      is >> board.toAlign >> board.turn;
+      is >> board.toAlign >> board.turn >> board.toInsert;
       is >> board.m;
     }
 
